@@ -131,9 +131,22 @@ In two separate terminal, expose the cluster services via port-forwarding:
     "quantity": 1
   }
 ```
+#### 4. Create a new Product
+```
+- Endpoint: `POST http://localhost:5001/products`
+- Headers: `Content-Type: application/json`
+- Body:
+  json
+  {
+    "id": 3,
+    "name": "Speaker",
+    "price": 65,
+    "stock": 35
+  }
+```
 ## 7. Kubernetes Dashboard Analysis
 
 To inspect cluster health, resource utilization, and pod status in a browser: **minikube dashboard**
 ```
-- Navigate to **Workloads > Deployments** to verify `product-service-deployment` and `order-service-deployment`.
+Navigate to **Workloads > Deployments** to verify `product-service-deployment` and `order-service-deployment`.
 ```
