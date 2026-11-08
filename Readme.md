@@ -62,46 +62,55 @@ Following tools are installed and utilised on the system:
 ## 5. Build and Deployment Instructions
 ### Step 1: Start Minikube
 Initialize local Kubernetes cluster:
+```
 - **minikube start --driver=docker**
-
+```
 ### Step 2: Build Docker Images
 Navigate to each service directory and build the respective container images:
 
 # Build Product Service Image
+```
 - **cd product-service**
 - **docker build -t product-service:v1 .**
-
+```
 # Build Order Service Image
+```
 - **cd ../order-service**
 - **docker build -t order-service:v1 .**
-
+```
 ### Step 3: Deploy to Kubernetes
 Apply the deployment and service manifests to Minikube:
+```
 - **kubectl apply -f product-service/k8s-deployment.yaml**
 - **kubectl apply -f order-service/k8s-deployment.yaml**
-
+```
 ### Step 4: Verify Deployment Status
 Ensure pods are in the `Running` state and services have been assigned cluster ports:
+```
 - **kubectl get deployments**
 - **kubectl get service**
-
+```
 ## 5. Accessing the Application & API Testing
 
 ### 5.1 Expose Services Locally
 In two separate terminal, expose the cluster services via port-forwarding:
 
 **Terminal 1 (Product Service):**
+```
 - kubectl port-forward svc/product-service 5001:5001
-
+```
 **Terminal 2 (Order Service):**
+```
 - kubectl port-forward svc/order-service 5002:5002
-
+```
 ### 5.2 Sample API Requests & Responses
 
 #### 1. Fetch All Products
+```
 - **Endpoint:** `GET http://localhost:5001/products`
-
+```
 #### 2. Create an Order (Success Case)
+```
 - **Endpoint:** `POST http://localhost:5002/orders`
 - **Headers:** `Content-Type: application/json`
 - **Body:**
@@ -110,8 +119,9 @@ In two separate terminal, expose the cluster services via port-forwarding:
     "product_id": 1,
     "quantity": 2
   }
-
+```
 #### 3. Create an Order (Invalid Product ID)
+```
 - **Endpoint:** `POST http://localhost:5002/orders`
 - **Headers:** `Content-Type: application/json`
 - **Body:**
@@ -120,8 +130,10 @@ In two separate terminal, expose the cluster services via port-forwarding:
     "product_id": 999,
     "quantity": 1
   }
-
+```
 ## 7. Kubernetes Dashboard Analysis
 
 To inspect cluster health, resource utilization, and pod status in a browser: **minikube dashboard**
+```
 - Navigate to **Workloads > Deployments** to verify `product-service-deployment` and `order-service-deployment`.
+```
