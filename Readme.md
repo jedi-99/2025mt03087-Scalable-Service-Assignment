@@ -109,29 +109,11 @@ In two separate terminal, expose the cluster services via port-forwarding:
 ```
 - Endpoint: `GET http://localhost:5001/products`
 ```
-#### 2. Create an Order (Success Case)
+#### 2. Fetch Product by id
 ```
-- Endpoint: `POST http://localhost:5002/orders`
-- Headers: `Content-Type: application/json`
-- Body:
-  json
-  {
-    "product_id": 1,
-    "quantity": 2
-  }
+- Endpoint: `GET http://localhost:5001/products/id`
 ```
-#### 3. Create an Order (Invalid Product ID)
-```
-- Endpoint: `POST http://localhost:5002/orders`
-- Headers: `Content-Type: application/json`
-- Body:
-  json
-  {
-    "product_id": 999,
-    "quantity": 1
-  }
-```
-#### 4. Create a new Product
+#### 3. Create a new Product
 ```
 - Endpoint: `POST http://localhost:5001/products`
 - Headers: `Content-Type: application/json`
@@ -144,6 +126,33 @@ In two separate terminal, expose the cluster services via port-forwarding:
     "stock": 35
   }
 ```
+#### 4. Create an Order (Success Case)
+```
+- Endpoint: `POST http://localhost:5002/orders`
+- Headers: `Content-Type: application/json`
+- Body:
+  json
+  {
+    "product_id": 1,
+    "quantity": 2
+  }
+```
+#### 5. Create an Order (Invalid Product ID)
+```
+- Endpoint: `POST http://localhost:5002/orders`
+- Headers: `Content-Type: application/json`
+- Body:
+  json
+  {
+    "product_id": 999,
+    "quantity": 1
+  }
+```
+#### 6. Get an Order
+```
+- Endpoint: `GET http://localhost:5002/orders/id`
+```
+
 ## 7. Kubernetes Dashboard Analysis
 
 To inspect cluster health, resource utilization, and pod status in a browser: **minikube dashboard**
