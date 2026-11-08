@@ -1,3 +1,4 @@
+Demo Link: https://drive.google.com/file/d/14WUUBAj3NZH7kxylOLVFTsj2iCTXPY1U/view?usp=drive_link
 ## 1. Project Overview
 This project implements and deploys a lightweight, scalable microservices-based application representing an **E-Commerce Store**. The system is decomposed into two decoupled, independently deployable services:
 - **Product Service:** Manages catalog items, prices, and inventory levels.
