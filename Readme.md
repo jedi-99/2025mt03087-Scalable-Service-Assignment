@@ -63,32 +63,32 @@ Following tools are installed and utilised on the system:
 ### Step 1: Start Minikube
 Initialize local Kubernetes cluster:
 ```
-- **minikube start --driver=docker**
+- minikube start --driver=docker
 ```
 ### Step 2: Build Docker Images
 Navigate to each service directory and build the respective container images:
 
 # Build Product Service Image
 ```
-- **cd product-service**
-- **docker build -t product-service:v1 .**
+- cd product-service
+- docker build -t product-service:v1 .
 ```
 # Build Order Service Image
 ```
-- **cd ../order-service**
-- **docker build -t order-service:v1 .**
+- cd ../order-service
+- docker build -t order-service:v1 .
 ```
 ### Step 3: Deploy to Kubernetes
 Apply the deployment and service manifests to Minikube:
 ```
-- **kubectl apply -f product-service/k8s-deployment.yaml**
-- **kubectl apply -f order-service/k8s-deployment.yaml**
+- kubectl apply -f product-service/k8s-deployment.yaml
+- kubectl apply -f order-service/k8s-deployment.yaml
 ```
 ### Step 4: Verify Deployment Status
 Ensure pods are in the `Running` state and services have been assigned cluster ports:
 ```
-- **kubectl get deployments**
-- **kubectl get service**
+- kubectl get deployments
+- kubectl get service
 ```
 ## 5. Accessing the Application & API Testing
 
@@ -107,13 +107,13 @@ In two separate terminal, expose the cluster services via port-forwarding:
 
 #### 1. Fetch All Products
 ```
-- **Endpoint:** `GET http://localhost:5001/products`
+- Endpoint: `GET http://localhost:5001/products`
 ```
 #### 2. Create an Order (Success Case)
 ```
-- **Endpoint:** `POST http://localhost:5002/orders`
-- **Headers:** `Content-Type: application/json`
-- **Body:**
+- Endpoint: `POST http://localhost:5002/orders`
+- Headers: `Content-Type: application/json`
+- Body:
   json
   {
     "product_id": 1,
@@ -122,9 +122,9 @@ In two separate terminal, expose the cluster services via port-forwarding:
 ```
 #### 3. Create an Order (Invalid Product ID)
 ```
-- **Endpoint:** `POST http://localhost:5002/orders`
-- **Headers:** `Content-Type: application/json`
-- **Body:**
+- Endpoint: `POST http://localhost:5002/orders`
+- Headers: `Content-Type: application/json`
+- Body:
   json
   {
     "product_id": 999,
