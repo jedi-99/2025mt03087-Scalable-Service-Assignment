@@ -2,7 +2,7 @@
 This project implements and deploys a lightweight, scalable microservices-based application representing an **E-Commerce Store**. The system is decomposed into two decoupled, independently deployable services:
 - **Product Service:** Manages catalog items, prices, and inventory levels.
 - **Order Service:** Handles order placement, calculates transaction totals, and validates product availability synchronously via REST API calls against the Product Service.
-Both services are containerized using **Docker** and deployed onto a local **Kubernetes (Minikube)** cluster with service discovery, isolated datastores, and declarative deployment configurations.
+Both services are containerized using **Docker** and deployed onto a local **Kubernetes (Minikube)** cluster with service discovery.
 
 ## 2. Architecture & Design
 
@@ -29,18 +29,18 @@ Both services are containerized using **Docker** and deployed onto a local **Kub
 ```
 ### 2.2 System Operations (Commands & Queries)
 - **Product Service:**
-  - `GET /products` (*Query*): List all catalog items and available stock.
-  - `GET /products/<id>` (*Query*): Retrieve details and inventory for a specific product ID.
-  - `POST /products` (*Command*): Create a new product entry in the catalog.
+  - `GET /products` : List all catalog items and available stock.
+  - `GET /products/<id>` : Retrieve details and inventory for a specific product ID.
+  - `POST /products` : Create a new product entry in the catalog.
 - **Order Service:**
-  - `POST /orders` (*Command*): Validates product inventory via internal HTTP request to `http://product-service:5001/products/<id>` and registers a new order.
-  - `GET /orders/<id>` (*Query*): Fetch order details and order fulfillment status.
+  - `POST /orders` : Validates product inventory and registers a new order.
+  - `GET /orders/<id>` : Fetch order details and order fulfillment status.
 
 ## 3. Repository Structure
 Each microservice is maintained in an independent codebase:
-
+```
 ├── product-service/
-│   ├── app.py                  # Product service business logic & SQLite layer
+│   ├── app.py                  # Product service business logic
 │   ├── requirements.txt        # Python dependencies (Flask, requests)
 │   ├── Dockerfile              # Container image definition
 │   └── k8s-deployment.yaml     # Kubernetes Deployment & ClusterIP Service
@@ -50,7 +50,7 @@ Each microservice is maintained in an independent codebase:
     ├── requirements.txt        # Python dependencies (Flask, requests)
     ├── Dockerfile              # Container image definition
     └── k8s-deployment.yaml     # Kubernetes Deployment & NodePort Service
-
+```
 ## 4. Prerequisites & Setup
 Following tools are installed and utilised on the system:
 - **Docker Desktop**
@@ -61,30 +61,29 @@ Following tools are installed and utilised on the system:
 
 ## 5. Build and Deployment Instructions
 ### Step 1: Start Minikube
-Initialize local Kubernetes cluster: **minikube start --driver=docker**
+Initialize local Kubernetes cluster:
+- **minikube start --driver=docker**
 
 ### Step 2: Build Docker Images
 Navigate to each service directory and build the respective container images:
 
 # Build Product Service Image
-**cd product-service**
-**docker build -t product-service:v1 .**
+- **cd product-service**
+- **docker build -t product-service:v1 .**
 
 # Build Order Service Image
-**cd ../order-service**
-**docker build -t order-service:v1 .**
+- **cd ../order-service**
+- **docker build -t order-service:v1 .**
 
 ### Step 3: Deploy to Kubernetes
 Apply the deployment and service manifests to Minikube:
-**kubectl apply -f product-service/k8s-deployment.yaml**
-**kubectl apply -f order-service/k8s-deployment.yaml**
+- **kubectl apply -f product-service/k8s-deployment.yaml**
+- **kubectl apply -f order-service/k8s-deployment.yaml**
 
 ### Step 4: Verify Deployment Status
 Ensure pods are in the `Running` state and services have been assigned cluster ports:
-
-**kubectl get deployments**
-**kubectl get pods -o wide**
-**kubectl get svc**
+- **kubectl get deployments**
+- **kubectl get service**
 
 ## 5. Accessing the Application & API Testing
 
@@ -92,10 +91,10 @@ Ensure pods are in the `Running` state and services have been assigned cluster p
 In two separate terminal, expose the cluster services via port-forwarding:
 
 **Terminal 1 (Product Service):**
-kubectl port-forward svc/product-service 5001:5001
+- kubectl port-forward svc/product-service 5001:5001
 
 **Terminal 2 (Order Service):**
-kubectl port-forward svc/order-service 5002:5002
+- kubectl port-forward svc/order-service 5002:5002
 
 ### 5.2 Sample API Requests & Responses
 
@@ -125,5 +124,4 @@ kubectl port-forward svc/order-service 5002:5002
 ## 7. Kubernetes Dashboard Analysis
 
 To inspect cluster health, resource utilization, and pod status in a browser: **minikube dashboard**
-
 - Navigate to **Workloads > Deployments** to verify `product-service-deployment` and `order-service-deployment`.
