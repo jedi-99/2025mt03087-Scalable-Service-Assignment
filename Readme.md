@@ -7,6 +7,7 @@ Both services are containerized using **Docker** and deployed onto a local **Kub
 ## 2. Architecture & Design
 
 ### 2.1 System Architecture
+```
                          +-----------------------------+
                          |      Postman / Client       |
                          +-----------------------------+
@@ -25,7 +26,7 @@ Both services are containerized using **Docker** and deployed onto a local **Kub
   |              |                                         |                 |
   |    [ svc/order-service ]                     [ svc/product-service ]     |
   +--------------------------------------------------------------------------+
-
+```
 ### 2.2 System Operations (Commands & Queries)
 - **Product Service:**
   - `GET /products` (*Query*): List all catalog items and available stock.
